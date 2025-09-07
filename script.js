@@ -1220,19 +1220,26 @@ document.addEventListener('DOMContentLoaded', () => {
         const damageTypeClass = `type-${character.damageType.toLowerCase()}`;
 
         const contentHTML = `
-            <img src="images/characters/${character.id}.png" alt="${character.name}">
-            <div>
-                <h3 style="margin-bottom: 5px;">${character.name}</h3>
-                <p style="color: #f9ca24; font-size: 20px; margin: 0 0 10px 0;">${rarityStars}</p>
-                <p><strong>Attribute:</strong> <span class="${attributeClass}" style="padding: 3px 8px; border-radius: 12px; color: white;">${character.attribute}</span></p>
-                <p><strong>Damage Type:</strong> <span class="${damageTypeClass}" style="padding: 3px 8px; border-radius: 12px; color: white;">${character.damageType}</span></p>
-                <div class="tags-container">
-                    <strong>Specialties:</strong> 
-                    ${character.specialties.map(tag => `<span class="tag">${tag}</span>`).join('')}
-                </div>
-                <div class="tags-container">
-                    <strong>Tags:</strong> 
-                    ${character.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+            <div class="character-detail-modal">
+                <img src="images/characters/${character.id}.png" alt="${character.name}">
+                <div>
+                    <h3 style="margin-bottom: 5px;">${character.name}</h3>
+                    <p style="color: #f9ca24; font-size: 20px; margin: 0 0 10px 0;">${rarityStars}</p>
+                    <p><strong>Attribute:</strong> <span class="${attributeClass}" style="padding: 3px 8px; border-radius: 12px; color: white;">${character.attribute}</span></p>
+                    <p><strong>Damage Type:</strong> <span class="${damageTypeClass}" style="padding: 3px 8px; border-radius: 12px; color: white;">${character.damageType}</span></p>
+                    <div class="tags-container">
+                        <strong>Specialties:</strong> 
+                        ${character.specialties.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                    </div>
+                    <div class="tags-container">
+                        <strong>Tags:</strong> 
+                        ${character.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                    </div>
+                    <div class="arcanum-container">
+                        <strong>Arcanum 1</strong><br>
+                        <strong>Arcanum 2</strong><br>
+                        <strong>ULT</strong>
+                    </div>
                 </div>
             </div>
         `;

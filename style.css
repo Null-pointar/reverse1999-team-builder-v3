@@ -755,10 +755,13 @@ body {
 }
 .modal-content {
     background: #fff;
+    /*background-image: linear-gradient(to bottom, #434343, hsl(var(--b2)) 20rem);*/
     padding: 25px;
     border-radius: 8px;
+    /*width: 90%;
+    max-width: 500px;*/
     width: 90%;
-    max-width: 500px;
+    height: 70%;
     position: relative;
     text-align: center;
 }
@@ -982,36 +985,51 @@ body {
 
 /* --- キャラクター詳細モーダル --- */
 #character-detail-modal .modal-content {
+    background-image: url(images/assets/background.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    
     max-width: 600px; /* 横幅を少し広げる */
     text-align: left; /* テキストを左揃えに */
 }
 
 #modal-character-content img {
+    /*width: 150px;
+    height: 225px;*/
     width: 150px;
-    height: 225px;
+    height: auto;
     object-fit: cover;
     border-radius: 8px;
     flex-shrink: 0;
 }
 #modal-character-content h3 {
+    color: white;
     margin-top: 0;
     font-size: 24px;
 }
 #modal-character-content p {
+    color: white;
     margin: 8px 0;
 }
 #modal-character-content .tags-container {
+    color: white;
     display: flex;
     flex-wrap: wrap;
     gap: 5px;
     margin-top: 10px;
 }
 #modal-character-content .tag {
-    background-color: #e2e8f0;
+    /*background-color: #e2e8f0;*/
+    background-color: #333;
     border-radius: 12px;
     padding: 4px 10px;
     font-size: 12px;
 }
+#modal-character-content .arcanum-container {
+    color: white;
+}
+
 
 
 /* --- スロット内カードの削除ボタン --- */
