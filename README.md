@@ -1,7 +1,6 @@
 
 
-Click here -> [https://null-pointar.github.io/reverse1999-team-builder-v2
-/]
+Click here -> [https://null-pointar.github.io/reverse1999-team-builder-v3/]
 
 
 ## Current Last Number for Character
