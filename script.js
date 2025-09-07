@@ -1268,6 +1268,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // TODO: 技の説明や凸の説明
 // TODO: Psychube用のカードを作成する -> 画像の比率がおかしくなるため
 
+
 /* Psychubeの説明 implement
 {
   "id": "P6043",
