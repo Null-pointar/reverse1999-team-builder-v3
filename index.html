@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reverse: 1999 Team Builder</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/qrcode-generator/qrcode.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+</head>
+<body>
+
+    <header class="header">
+        <button id="menu-button" class="menu-button">☰</button>
+        <h1>Reverse: 1999 Team Builder</h1>
+    </header>
+
+    <div id="side-panel-overlay" class="side-panel-overlay hidden">
+        <div id="side-panel" class="side-panel">
+            <button id="close-panel-button" class="close-panel-button">×</button>
+            <nav class="panel-nav">
+                <button class="panel-nav-button active" data-panel="teams">Saved Teams</button>
+                <button class="panel-nav-button" data-panel="load">Load Team</button>
+                <button class="panel-nav-button" data-panel="howtouse">How to Use</button>
+            </nav>
+            <div class="panel-content-wrapper">
+                <div id="panel-content-teams" class="panel-content active">
+                    <div class="panel-section">
+                        <h3>Team List</h3>
+                        <ul id="saved-teams-list"></ul>
+                    </div>
+                </div>
+
+                <div id="panel-content-load" class="panel-content">
+                    <div class="panel-section">
+                        <h3>Load from Team Code</h3>
+                        <textarea id="team-code-input" placeholder="Paste the generated team code here." rows="4"></textarea>
+                        <div class="button-group">
+                            <button type="button" id="load-team-from-code-button">Load Team</button>
+                            <button type="button" id="clear-input-button">Clear</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="panel-content-howtouse" class="panel-content">
+                    <div class="panel-section">
+                        <h3>How to Use</h3>
+                        <ul>
+                            <li><strong>Find Characters:</strong> Use filters or the search bar to find characters.</li>
+                            <li><strong>Build a Team:</strong> Drag and drop characters from the list to the team slots above.</li>
+                            <li><strong>Change Members:</strong> Drag a character from one slot to another to swap them.</li>
+                            <li><strong>Remove Members:</strong> Click on a character in a slot to remove them from the team.</li>
+                        </ul>
+                        <h3>Save & Load</h3>
+                        <ol>
+                            <li>Open this panel using the menu button (☰).</li>
+                            <li>Use "Save Current Team" to save your lineup.</li>
+                            <li>Load a saved team from the "Team List" by clicking the "Load" button.</li>
+                            <li>Edit the name and description with the "Edit" button.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="team-section">
+        <div id="mode-selector" class="mode-selector">
+            <button class="mode-btn active" data-mode="mode1">Standard</button>
+            <button class="mode-btn" data-mode="limbo">Limbo</button>
+            <button class="mode-btn" data-mode="4parties">4 Parties</button>
+        </div>
+
+        <div class="team-layout-container">
+            <div id="team-slots-container" class="team-slots-container"></div>
+            
+            <form id="save-team-form" class="loaded-team-info">
+                <input type="text" id="loaded-team-title" class="team-title-input" placeholder="Team Name (Required)" required>
+                <textarea id="loaded-team-desc" placeholder="Note for the team..."></textarea>
+                <p id="save-status" class="save-status"></p>
+                <div class="button-group">
+                    <button type="submit">Save Current Team</button>
+                    <button type="button" id="clear-team-button">Clear Current Team</button>
+                </div>
+            </form>
+            
+        </div>
+        <div class="team-display-wrapper">
+            <div id="team-stats-container" class="team-stats-container hidden"></div>
+        </div>
+    </section>
+
+    <main class="main-content">
+        <section class="filter-section">
+            <input type="text" id="search-bar" placeholder="Search by character name...">
+            <div id="view-switcher" class="view-switcher">
+                <button class="view-btn active" data-view="characters">Characters</button>
+                <button class="view-btn" data-view="psychubes">Psychubes</button>
+            </div>
+            <div class="filter-row">
+                <div class="filter-group">
+                    <p class="filter-label">Attribute</p>
+                    <div id="attribute-filters" class="attribute-filters"></div>
+                </div>
+                <div class="filter-group-separator"></div>
+                <div class="filter-group">
+                    <p class="filter-label">Damage Type</p>
+                    <div id="damage-type-filters" class="damage-type-filters"></div>
+                </div>
+            </div>
+            <p class="filter-label">Specialities</p>
+            <div id="specialty-filters" class="specialty-filters"></div>
+            <p class="filter-label">Tags</p>
+            <div id="tag-filters" class="tag-filters"></div>
+
+            <div class="sort-section">
+                <span class="sort-label">Sort by:</span>
+                <button class="sort-btn active" data-sort="default" data-view="characters">Default</button>
+                <button class="sort-btn" data-sort="rarity-desc" data-view="characters">Rarity ▼</button>
+                <button class="sort-btn" data-sort="rarity-asc" data-view="characters">Rarity ▲</button>
+                <button class="sort-btn" data-sort="version-desc" data-view="characters">Version ▼</button>
+                <button class="sort-btn" data-sort="version-asc" data-view="characters">Version ▲</button>
+                
+                <button class="sort-btn hidden" data-sort="id-desc" data-view="psychubes">ID ▼</button>
+                <button class="sort-btn hidden" data-sort="id-asc" data-view="psychubes">ID ▲</button>
+
+                <div style="text-align: center; margin-top: 20px;">
+                    <button id="reset-filters-button" style="padding: 8px 20px; border: 1px solid #ccc; background-color: #f0f0f0; border-radius: 5px; cursor: pointer;">Reset All Filters</button>
+                </div>
+            </div>
+            <!--</section>-->
+        </section>
+        <div id="character-list" class="character-list-area"></div>
+    </main>
+
+    <footer class="footer">
+        <div class="language-switcher">
+            <button class="lang-button active" data-lang="en">English</button>
+            <button class="lang-button" data-lang="zh">中文</button>
+            <button class="lang-button" data-lang="ja">日本語</button>
+        </div>
+        <div class="disclaimer-content">
+            <div class="disclaimer-text lang-en hidden">
+                <p><strong>Disclaimer</strong></p>
+                <p>This website is an unofficial fan-made site for the game "Reverse: 1999". All copyrights, trademarks, and other intellectual property rights for the game content and images used on this site belong to their provider, Guangzhou Deep-blue Interactive Network Technology Co., Ltd. This site is created as a fan activity and is not for commercial purposes.</p>
+            </div>
+            <div class="disclaimer-text lang-zh hidden">
+                <p><strong>免责声明</strong></p>
+                <p>本网站是游戏《重返未来：1999》的非官方粉丝网站。网站内所使用的游戏图像、内容的著作权、商标权及其他所有知识产权，均归属于其内容提供方广州深蓝互动网络科技有限公司。本网站作为粉丝活动的一部分而创建，不用于任何商业目的。</p>
+            </div>
+            <div class="disclaimer-text lang-ja">
+                <p><strong>免責事項</strong></p>
+                <p>本サイトは、ゲーム「リバース1999」の非公式ファンサイトです。サイト内で使用しているゲーム画像の著作権、商標権、その他全ての知的財産権は、当該コンテンツの提供元である Guangzhou Deep-blue Interactive Network Technology Co., Ltd. に帰属します。当サイトはファン活動の一環として作成したものであり、営利目的ではありません。</p>
+            </div>
+        </div>
+    </footer>
+
+    <div id="share-modal" class="modal-overlay hidden">
+    <!--<div id="share-modal" class="hidden">-->
+        <div class="modal-content">
+            <button id="close-modal-button" class="close-modal-button">×</button>
+            <h3>Share Team</h3>
+            <p>Copy this link or scan the QR code to share.</p>
+            <div class="share-url-wrapper">
+                <input type="text" id="share-url-input" readonly>
+                <button id="copy-url-button">Copy</button>
+            </div>
+            <div id="qrcode-display"></div>
+        </div>
+    </div>
+
+    <!-- キャラクターのカードをクリックしたときの詳細モーダル -->
+    <div id="mini-team-view" class="mini-team-view hidden"></div>
+
+    <div id="share-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <button id="close-modal-button" class="close-modal-button">×</button>
+            <h3>Share Team</h3>
+            <p>Copy this link or scan the QR code to share.</p>
+            <div class="share-url-wrapper">
+                <input type="text" id="share-url-input" readonly>
+                <button id="copy-url-button">Copy</button>
+            </div>
+            <div id="qrcode-display"></div>
+        </div>
+    </div>
+
+    <div id="character-detail-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <button id="close-detail-modal-button" class="close-modal-button">×</button>
+            <div id="modal-character-content" style="display: flex; gap: 20px;">
+                </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
